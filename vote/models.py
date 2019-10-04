@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 from vote.managers import VotableManager
+from django.conf import settings.AUTH_USER_MODEL
+
+Votes = {"UP": 0; "DOWN": 1; "LOL": 2}
 
 UP = 0
 DOWN = 1
@@ -27,7 +30,7 @@ class Vote(models.Model):
         DOWN: 'num_vote_down'
     }
 
-    user_id = models.BigIntegerField()
+    user_id = models.ForeignKey(AUTH_USER_MODEL,on_delete=models.CASCADE)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey()
