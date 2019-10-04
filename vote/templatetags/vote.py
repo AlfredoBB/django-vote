@@ -17,3 +17,12 @@ def vote_exists(model, user=AnonymousUser(), action=UP):
     elif user.is_anonymous():
         return False
     return model.votes.exists(user.pk, action=action)
+
+@register.simple_tag
+def what_voted(model, user=AnonymousUser()):
+    if get_version() >= '2.0':
+        if user.is_anonymous:
+            return False
+    elif user.is_anonymous():
+        return False
+    return model.votes.objects.filter(user.pk)
